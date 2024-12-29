@@ -19,3 +19,9 @@
 ~/Dotfiles/zsh/zshrc -> ~/.zshrc
 
 `ln -s ~/Dotfiles/zsh/zshrc ~/.zshrc`
+
+# Tmux
+
+~/Dotfiles/tmux/tmux.conf -> ~/.config/tmux/tmux.conf
+
+`ln -s ~/Dotfiles/tmux/tmux.conf ~/.config/tmux/tmux.conf`
