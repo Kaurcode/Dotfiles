@@ -25,3 +25,9 @@
 ~/Dotfiles/tmux/tmux.conf -> ~/.config/tmux/tmux.conf
 
 `ln -s ~/Dotfiles/tmux/tmux.conf ~/.config/tmux/tmux.conf`
+
+# Contour
+
+~/Dotfiles/contour/contour.yml -> ~/.config/contour/contour.yml
+
+`ln -s ~/Dotfiles/contour/contour.yml ~/.config/contour/contour.yml`
