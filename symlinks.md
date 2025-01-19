@@ -4,6 +4,7 @@
 
 `ln -s ~/Dotfiles/nvim ~/.config/nvim`
 
+
 # Hyprland
 
 ~/Dotfiles/hyprland/hyprland.conf -> ~/.config/hypr/hyprland.conf
@@ -14,17 +15,27 @@
 
 `ln -s ~/Dotfiles/hyprland/hyprland/ ~/.config/hypr/hyprland/`
 
+
+# Astal/AGSv2
+
+~/Dotfiles/ags -> ~/.config/ags
+
+`ln -s ~/Dotfiles/ags ~/.config/ags`
+
+
 # Zsh
 
 ~/Dotfiles/zsh/zshrc -> ~/.zshrc
 
 `ln -s ~/Dotfiles/zsh/zshrc ~/.zshrc`
 
+
 # Tmux
 
 ~/Dotfiles/tmux/tmux.conf -> ~/.config/tmux/tmux.conf
 
 `ln -s ~/Dotfiles/tmux/tmux.conf ~/.config/tmux/tmux.conf`
+
 
 # Contour
 
