@@ -17,7 +17,7 @@ function BatteryLevel() {
     const bat = Battery.get_default()
 
     return <box cssClasses={["Battery", "Component", "MiddleComponent"]}
-    >
+        visible={bind(bat, "isPresent")}>
         <image iconName={bind(bat, "batteryIconName")} />
         <label label={bind(bat, "percentage").as(p =>
             ` ${Math.floor(p * 100)}%`
