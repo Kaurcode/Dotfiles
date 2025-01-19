@@ -109,3 +109,25 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
 --     capabilities = capabilities
 -- }
+
+require("lspconfig")["rust_analyzer"].setup({
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "clippy",
+            },
+            check = {
+                command = "check",
+            },
+        },
+    },
+})
+
+require("lspconfig")["ts_ls"].setup({
+    capabilities = capabilities,
+})
+
+require("lspconfig")["cssls"].setup({
+    capabilities = capabilities,
+})

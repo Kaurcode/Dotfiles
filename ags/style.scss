@@ -1,0 +1,48 @@
+@use "sass:color";
+
+$bg: #00000000;
+$fg: #f1f1f1;
+$border-radius: 10px;
+
+$block-bg: #212223;
+$border-color: #8f00ff;
+
+window.Bar {
+  box-shadow: none;
+  background-color: $bg;
+  color: $fg;
+  font-size: 1.2em;
+  font-weight: bold;
+
+  margin-top: 5px;
+
+  .Component {
+    background-color: $block-bg;
+
+    padding: 7px 0;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: $border-color;
+    border-radius: $border-radius;
+  }
+
+  .MiddleComponent {
+    margin: 0 3px;
+  }
+
+  .RightComponent {
+    margin: 0 5px 0 3px;
+  }
+
+  .Time {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .Battery {
+    padding-right: 9px;
+    padding-left: 10px;
+  }
+
+}
