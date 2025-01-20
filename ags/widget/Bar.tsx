@@ -1,6 +1,18 @@
 import { Variable, GLib, bind } from "astal"
 import { Astal, Gtk, Gdk } from "astal/gtk4"
 import Battery from "gi://AstalBattery"
+import Wp from "gi://AstalWp"
+
+function Audio() {
+    const speaker = Wp.get_default()?.audio.defaultSpeaker!
+
+    return <box cssClasses={["Audio", "Component", "MiddleComponent"]}>
+        <image iconName={bind(speaker, "volumeIcon")} />
+        <label label=
+            {bind(speaker, "volume").as(v => ` ${Math.floor(v * 100)}%`)}
+        />
+    </box>
+}
 
 function Time({ format = "%H:%M  |  %a %e/%m" }) {
     const time = Variable<string>("").poll(1000, () =>
@@ -37,6 +49,7 @@ export default function Bar(monitor: Gdk.Monitor) {
         <box>
             <box hexpand halign={Gtk.Align.END} >
                 <BatteryLevel />
+                <Audio />
                 <Time />
             </box>
         </box>
