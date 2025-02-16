@@ -13,7 +13,7 @@
 
 ~/Dotfiles/hyprland/hyprland/ -> ~/.config/hypr/hyprland/
 
-`ln -s ~/Dotfiles/hyprland/hyprland/ ~/.config/hypr/hyprland/`
+`ln -s ~/Dotfiles/hyprland/hyprland/ ~/.config/hypr/`
 
 
 # Astal/AGSv2
