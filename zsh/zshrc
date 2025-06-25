@@ -1,44 +1,117 @@
+# History configuration
 
-# The following lines were added by compinstall
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
 
+
+# Zsh options
+setopt autocd extendedglob nomatch notify
+unsetopt beep
+umask 0077
+
+
+# Keybindings
+
+bindkey -v
+bindkey -M viins '^f' autosuggest-accept
+bindkey -M viins '^p' history-beginning-search-backward
+bindkey -M viins '^n' history-beginning-search-forward
+bindkey -M viins '^r' history-incremental-search-backward
+
+
+# Completion system setup
+
+autoload -Uz compinit promptinit
+compinit
+promptinit
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' expand suffix
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' insert-unambiguous true
-zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' list-prompt %SAt %p/%l: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' menu select=1
+# zstyle ':completion:*' menu select=1
 zstyle ':completion:*' original true
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p/%l%s
 zstyle ':completion:*' verbose true
+
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
 zstyle :compinstall filename '/home/kaur/.zshrc'
 
-autoload -Uz compinit promptinit
-compinit
-promptinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd extendedglob nomatch notify
-unsetopt beep
-bindkey -v
-# End of lines configured by zsh-newuser-install
-umask 0077
 
-PROMPT="  %F{171}%n||%m%F{201} (%~)
-%F{171}|>%f"
+# Zinit setup
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+
+# Plugins with zinit
+
+zinit ice from"gh-r" as"program" mv"posh-linux-amd64 -> oh-my-posh" pick"oh-my-posh"
+zinit light JanDeDobbeleer/oh-my-posh
+
+zinit light zsh-users/zsh-completions
+zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::archlinux
+zinit snippet OMZP::aws
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+zinit snippet OMZP::command-not-found
+zinit light zsh-users/zsh-syntax-highlighting  # Must be last plugin
+
+zinit cdreplay -q
+
+
+# Initialize oh-my-posh
+eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/main.toml)"
+
+
+# Yazi file manager
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+
+# Aliases
 
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -c=auto'
 alias ls='lsd'
 alias cat='bat'
+
+
+# Init external tools
+
+source /usr/share/nvm/init-nvm.sh
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"

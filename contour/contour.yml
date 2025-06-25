@@ -1,5 +1,7 @@
 # Default Contour Configuration File.
 
+# early_exit_threshold: 0
+
 # Overrides the auto-detected platform plugin to be loaded.
 #
 # Possible (incomplete list of) values are:
@@ -522,6 +524,14 @@ profiles:
         hyperlink_decoration:
             normal: dotted
             hover: underline
+
+    qutebrowser-yazi:
+        wm_class: qutebrowser-yazi
+        early_exit_threshold: 0
+        font:
+            size: 14
+      
+
 
 # Color Profiles
 # --------------

@@ -42,3 +42,17 @@
 ~/Dotfiles/contour/contour.yml -> ~/.config/contour/contour.yml
 
 `ln -s ~/Dotfiles/contour/contour.yml ~/.config/contour/contour.yml`
+
+
+# Yazi
+
+~/Dotfiles/yazi -> ~/.config/yazi
+
+`ln -s ~/Dotfiles/yazi ~/.config/yazi`
+
+
+# Oh-My-Posh
+
+~/Dotfiles/oh-my-posh -> ~/.config/oh-my-posh
+
+`ln -s ~/Dotfiles/oh-my-posh ~/.config/oh-my-posh`
