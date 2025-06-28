@@ -1,4 +1,9 @@
-(define-module (kivilaak packages kanata))
+(define-module (kivilaak packages kanata)
+  #:use-module (guix packages)
+  #:use-module (guix licenses)
+  #:use-module (guix build-system cargo)
+  #:use-module (guix git-download)
+  #:use-module (gnu packages linux))
 
 (define-public rust-stretch-0.3
   (package
