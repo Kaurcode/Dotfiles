@@ -3,6 +3,7 @@
   #:use-module (guix licenses)
   #:use-module (guix build-system cargo)
   #:use-module (guix git-download)
+  #:use-module (guix download)
   #:use-module (gnu packages linux))
 
 (define-public rust-stretch-0.3
