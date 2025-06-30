@@ -1,10 +1,15 @@
-(define-module (kivilaak packages kanata)
+(define-module (packages kanata)
   #:use-module (guix packages)
-  #:use-module (guix licenses)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system cargo)
   #:use-module (guix git-download)
   #:use-module (guix download)
-  #:use-module (gnu packages linux))
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages crates-io)
+  #:use-module (gnu packages crates-graphics)
+  #:use-module (gnu packages crates-windows)
+  #:use-module (gnu packages crates-apple)
+  #:use-module (gnu packages xorg))
 
 (define-public rust-stretch-0.3
   (package
@@ -26,7 +31,7 @@
     (synopsis "High performance & cross-platform Flexbox implementation")
     (description
      "This package provides High performance & cross-platform Flexbox implementation.")
-    (license unknown-license!)))
+    (license license:expat)))
 
 (define-public rust-newline-converter-0.2
   (package
@@ -610,8 +615,7 @@ the crate wayland-client for usable bindings.")
     (synopsis "Safe Rust bindings to POSIX/Unix/Linux/Winsock-like syscalls")
     (description
      "This package provides Safe Rust bindings to POSIX/Unix/Linux/Winsock-like syscalls.")
-    (license (list license:asl2.0 unknown-license! license:asl2.0
-                   license:expat))))
+    (license (list license:asl2.0 license:expat))))
 
 (define-public rust-log-0.4
   (package
