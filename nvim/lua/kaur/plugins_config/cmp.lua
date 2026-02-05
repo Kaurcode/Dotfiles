@@ -3,13 +3,13 @@ local cmp = require('cmp')
 
 cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
+        -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+            -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
         end,
     },
     window = {
@@ -45,31 +45,31 @@ cmp.setup({
         --
         -- <c-l> will move you to the right of each of the expansion locations.
         -- <c-h> is similar, except moving you backwards.
-        ['<C-l>'] = cmp.mapping(function() 
-            if luasnip.expand_or_locally_jumpable() then 
+        ['<C-l>'] = cmp.mapping(function()
+            if luasnip.expand_or_locally_jumpable() then
                 luasnip.expand_or_jump()
-            end 
-        end, { 'i', 's' }), 
-        ['<C-h>'] = cmp.mapping(function() 
+            end
+        end, { 'i', 's' }),
+        ['<C-h>'] = cmp.mapping(function()
             if luasnip.locally_jumpable(-1) then
                 luasnip.jump(-1)
-            end 
+            end
         end, { 'i', 's' }),
 
-          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+        -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+        --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
     }),
     sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        -- { name = 'vsnip' }, -- For vsnip users.
-        { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- -- { name = 'snippy' }, -- For snippy users.
-    }, 
-    {
-        { name = 'buffer' },
-        { name = 'path' },
-    })
+            { name = 'nvim_lsp' },
+            -- { name = 'vsnip' }, -- For vsnip users.
+            { name = 'luasnip' }, -- For luasnip users.
+            -- { name = 'ultisnips' }, -- For ultisnips users.
+            -- -- { name = 'snippy' }, -- For snippy users.
+        },
+        {
+            { name = 'buffer' },
+            { name = 'path' },
+        })
 })
 
 -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
@@ -81,53 +81,55 @@ sources = cmp.config.sources({
   { name = 'buffer' },
 })
 })
-require("cmp_git").setup() ]]-- 
+require("cmp_git").setup() ]] --
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
-mapping = cmp.mapping.preset.cmdline(),
-sources = {
-  { name = 'buffer' }
-}
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        { name = 'path' }
-    }, 
-    {
-        { name = 'cmdline' }
-    }),
+            { name = 'path' }
+        },
+        {
+            { name = 'cmdline' }
+        }),
     matching = { disallow_symbol_nonprefix_matching = false }
 })
 
--- Set up lspconfig.
+-- Set up LSP (new API: vim.lsp.config + vim.lsp.enable)
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
--- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
---     capabilities = capabilities
--- }
 
-require("lspconfig")["rust_analyzer"].setup({
+local idris2opts = {
+    server = { capabilities = capabilities }, -- Options passed to lspconfig idris2 configuration
+}
+require('idris2').setup(idris2opts)
+
+vim.lsp.config('rust_analyzer', {
     capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
-            checkOnSave = {
-                command = "clippy",
-            },
-            check = {
-                command = "check",
-            },
+            checkOnSave = { command = "clippy" },
+            check = { command = "check" },
         },
     },
 })
 
-require("lspconfig")["ts_ls"].setup({
+vim.lsp.config('ts_ls', {
     capabilities = capabilities,
 })
 
-require("lspconfig")["cssls"].setup({
+vim.lsp.config('cssls', {
     capabilities = capabilities,
 })
+
+-- Activate the servers
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('cssls')

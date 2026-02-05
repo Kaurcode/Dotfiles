@@ -56,3 +56,9 @@
 ~/Dotfiles/oh-my-posh -> ~/.config/oh-my-posh
 
 `ln -s ~/Dotfiles/oh-my-posh ~/.config/oh-my-posh`
+
+# Hyprshade
+
+~/Dotfiles/hyprshade -> ~/.config/hyprshade
+
+`ln -s ~/Dotfiles/hyprshade ~/.config/hyprshade`

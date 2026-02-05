@@ -110,6 +110,11 @@ alias ls='lsd'
 alias cat='bat'
 
 
+# Idris2 and packer
+
+export PATH="$HOME/.local/bin:$PATH"
+
+
 # Init external tools
 
 source /usr/share/nvm/init-nvm.sh

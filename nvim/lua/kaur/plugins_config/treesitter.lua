@@ -1,58 +1,59 @@
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
 
-	    -- Neovim stuff
+        -- Neovim stuff
 
-	    "vim", 
-	    "vimdoc", 
+        "vim",
+        "vimdoc",
 
-	    -- Treesitter stuff 
+        -- Treesitter stuff
 
-	    "query", 
+        "query",
 
-	    -- Markdown stuff
+        -- Markdown stuff
 
-	    "markdown", 
-	    "markdown_inline", 
+        "markdown",
+        "markdown_inline",
 
-	    -- Config stuff
+        -- Config stuff
 
-	    "yaml", 
-	    "json", 
-	    "jsonc",
+        "yaml",
+        "json",
+        "jsonc",
 
-	    -- Programming stuff
+        -- Programming stuff
 
-	    "c",
+        "c",
         "rust",
+        "idris",
 
-	    -- Stylesheets stuff
-	    
-	    "css",
+        -- Stylesheets stuff
+
+        "css",
         "scss",
 
-	    -- Scripting stuff
+        -- Scripting stuff
 
-	    "bash",
-	    "lua", 
-	    "python",
+        "bash",
+        "lua",
+        "python",
 
         "javascript",
         "typescript",
         "tsx",
 
-	    -- Tmux stuff
+        -- Tmux stuff
 
-	    "tmux",
+        "tmux",
 
-	    -- Git stuff
+        -- Git stuff
 
-	    "git_config", 
-	    "git_rebase", 
-	    "gitcommit", 
-	    "diff", 
-	    "gitattributes", 
-	    "gitignore", 
+        "git_config",
+        "git_rebase",
+        "gitcommit",
+        "diff",
+        "gitattributes",
+        "gitignore",
 
     },
     sync_install = false,
@@ -60,13 +61,13 @@ require("nvim-treesitter.configs").setup {
     auto_install = true,
 
     highlight = {
-	    enable = true,
+        enable = true,
 
-	    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-	    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-	    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-	    -- Instead of true it can also be a list of languages 
-	    additional_vim_regex_highlighting = false,
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = false,
     },
 
     indent = {
