@@ -1,4 +1,4 @@
-(define-module (packages fonts fira-code-nerd)
+(define-module (packages fonts font-nerd-fira-code)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system font)
@@ -18,15 +18,6 @@
               (sha256
                (base32 "0zg4ng2k07zwk7q3rdd3bvxa915qrsk8d67isqf56np0w29v0gyq"))))
     (build-system font-build-system)
-    (arguments
-     (list
-      #:phases
-      #~(modify-phases %standard-phases
-          (replace 'unpack
-            (lambda _
-              (let ((target (string-append (getcwd) "/src")))
-                (mkdir target)
-                (invoke "tar" "xf" #$source "-C" target)))))))
     (home-page "https://www.nerdfonts.com")
     (synopsis "Fira Code patched with Nerd Font glyphs")
     (description "This package provides the Fira Code mono font family \

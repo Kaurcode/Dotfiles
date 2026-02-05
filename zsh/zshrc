@@ -108,10 +108,14 @@ alias grep='grep --color=auto'
 alias ip='ip -c=auto'
 alias ls='lsd'
 alias cat='bat'
+alias upgrade-system="sudo guix system -L /villa/kivilaak/Dotfiles reconfigure /villa/kivilaak/Dotfiles/xiug/config/systems/$(hostname).scm"
+alias update-system="guix pull --channels=/villa/kivilaak/Dotfiles/xiug/config/channels/channels.scm"
+alias upgrade-home="guix home reconfigure /villa/kivilaak/Dotfiles/xiug/config/home/home-config.scm"
 
 
 # Init external tools
 
-source /usr/share/nvm/init-nvm.sh
+nvm_init_file="/usr/share/nvm/init-nvm.sh"
+[ -f "$nvm_init_file" ] && source "$nvm_init_file"
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"

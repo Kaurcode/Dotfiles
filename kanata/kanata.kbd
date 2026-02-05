@@ -1,0 +1,44 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps
+  rsft
+  a s d f g 
+  h j k l ;
+)
+
+(defvar
+  mod-tap-time 250
+  mod-hold-time 200
+)
+
+(defalias
+  esc-super (tap-hold-press $mod-tap-time $mod-hold-time esc lmet)
+  caps-rsft (multi f24 (tap-hold-press $mod-tap-time $mod-hold-time caps rsft))
+  a-mod (tap-hold-release $mod-tap-time $mod-hold-time a lmet)
+  s-mod (tap-hold-release $mod-tap-time $mod-hold-time s lalt)
+  d-mod (tap-hold-release $mod-tap-time $mod-hold-time d lsft)
+  f-mod (tap-hold-release $mod-tap-time $mod-hold-time f lctl)
+  g-mod (tap-hold-release $mod-tap-time $mod-hold-time g ralt)
+  h-mod (tap-hold-release $mod-tap-time $mod-hold-time h ralt)
+  j-mod (tap-hold-release $mod-tap-time $mod-hold-time j rctl)
+  k-mod (tap-hold-release $mod-tap-time $mod-hold-time k rsft)
+  l-mod (tap-hold-release $mod-tap-time $mod-hold-time l lalt)
+  ;-mod (tap-hold-release $mod-tap-time $mod-hold-time ; rmet)
+)
+
+(deflayer base
+  @esc-super
+  @caps-rsft
+  @a-mod @s-mod @d-mod @f-mod @g-mod 
+  @h-mod @j-mod @k-mod @l-mod @;-mod
+)
+
+(deflayer symbols
+  <
+  _
+  [ { S-8 bspc S-2
+  ' ret S-9 } ]
+)
