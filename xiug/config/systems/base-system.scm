@@ -10,10 +10,11 @@
                #:export (base-system))
 
 (use-package-modules
-  certs
-  vim
   admin
+  certs
+  disk
   gnome
+  vim
   wm
   shells
   tmux
@@ -21,22 +22,16 @@
   freedesktop
   kde-plasma
   package-management
-  terminals
-  web-browsers
-  version-control
-  xdisorg
   ssh
-  rust-apps
-  commencement
-  qt
   emacs
-  emacs-xyz
   polkit
-  fonts
-  disk
-  video)
+  search
+  vpn
+  qt
+  xdisorg)
 
-(use-service-modules 
+(use-service-modules
+  admin
   desktop
   networking
   sddm
@@ -87,8 +82,14 @@
                         (service power-profiles-daemon-service-type)
                         (service udisks-service-type)
                         (service gvfs-service-type)
-                        (service polkit-service-type)
+                        (service polkit-service-type
+                                 (polkit-configuration (polkit polkit)))
                         polkit-wheel-service
+                        (service file-database-service-type
+                                 (file-database-configuration
+                                  (package plocate)))
+                        (service package-database-service-type
+                                 (package-database-configuration))
                         (service kanata-service-type
                                  (kanata-configuration 
                                    (config-file (local-file "../../../kanata/kanata.kbd")))))
@@ -98,7 +99,8 @@
                                                                       (substitute-urls
                                                                         (append (list 
                                                                                   "https://substitutes.nonguix.org"
-                                                                                  "https://cache-cdn.guix.moe")
+                                                                                  "https://cache-cdn.guix.moe"
+                                                                                  "https://substitutes.guix.gofranz.com")
                                                                                 %default-substitute-urls))
                                                                       (authorized-keys
                                                                         (append (list (plain-file "non-guix.pub"
@@ -112,7 +114,9 @@
                                                                                       (plain-file "guix-moe-old.pub"
                                                                                                   "(public-key (ecc (curve Ed25519) (q #374EC58F5F2EC0412431723AF2D527AD626B049D657B5633AAAEBC694F3E33F9#)))")
                                                                                       (plain-file "guix-moe.pub"
-                                                                                                  "(public-key (ecc (curve Ed25519) (q #552F670D5005D7EB6ACF05284A1066E52156B51D75DE3EBD3030CD046675D543#)))"))
+                                                                                                  "(public-key (ecc (curve Ed25519) (q #552F670D5005D7EB6ACF05284A1066E52156B51D75DE3EBD3030CD046675D543#)))")
+                                                                                      (plain-file "guix-panther.pub"
+                                                                                                  "(public-key (ecc (curve Ed25519) (q #0096373009D945F86C75DFE96FC2D21E2F82BA8264CB69180AA4F9D3C45BAA47#)))"))
                                                                         %default-authorized-guix-keys)))))))
   
     (kernel linux)
@@ -218,58 +222,43 @@
                        "\nDefaults editor=/run/current-system/profile/bin/nvim, !env_editor"))
   
     (packages (append (list
-                        neovim
                         wpa-supplicant
                         network-manager
+                        openconnect
+                        network-manager-openconnect
+
+                        openssh
+
+                        lvm2
+                        btrfs-progs
+                        e2fsprogs
+                        dosfstools
+
+                        neovim
+                        emacs-pgtk
+
                         hyprland
-                        zsh
-                        tmux
-                        dunst
+
                         pipewire
                         wireplumber
+
+                        wl-clipboard
+
+                        qtwayland
+
                         xdg-desktop-portal-hyprland
                         xdg-desktop-portal-kde
                         xdg-desktop-portal-wlr
                         xdg-desktop-portal-gtk
                         xdg-desktop-portal
+
+                        polkit
+
+                        zsh
+                        tmux
+
                         flatpak
-                        foot
-                        qutebrowser
-                        git
-          		      wofi
-          		      openssh
-          		      lsd
-          		      bat
-          		      zoxide
-          		      fzf
-          		      qt6ct
-          		      qtwayland
-          		      gcc-toolchain
-          		      ripgrep
-          		      emacs-pgtk
-          		      emacs-evil
-          		      emacs-evil-collection
-          		      emacs-evil-surround
-          		      emacs-evil-commentary
-          		      emacs-evil-leader
-          		      emacs-which-key
-          		      emacs-ivy
-          		      emacs-magit
-          		      emacs-consult
-          		      emacs-orderless
-          		      emacs-marginalia
-          		      emacs-yasnippet
-          		      wl-clipboard
-          		      polkit
-          		      hyprpolkitagent
-          		      font-google-noto-emoji
-          		      hyprlock
-          		      hypridle
-          		      lvm2
-          		      btrfs-progs
-          		      e2fsprogs
-          		      dosfstools
-          		      mpvpaper)
+                        )
                       %base-packages))
   
     (name-service-switch %mdns-host-lookup-nss))

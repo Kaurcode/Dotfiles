@@ -1,3 +1,22 @@
 nvim/lazy-lock.json
 *.log
 *.tmp
+
+# --- Emacs junk ---
+# Backup & autosave files
+*~
+\#*\#
+.\#*
+.emacs.desktop
+.emacs.desktop.lock
+
+# Auto-save list
+emacs/auto-save-list/
+
+# Emacs state & caches
+emacs/transient/
+emacs/url/
+
+# Org-mode bookkeeping
+emacs/.org-id-locations
+

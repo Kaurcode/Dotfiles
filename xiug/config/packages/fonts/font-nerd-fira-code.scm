@@ -1,4 +1,4 @@
-(define-module (packages fonts font-nerd-fira-code)
+(define-module (xiug config packages fonts font-nerd-fira-code)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system font)

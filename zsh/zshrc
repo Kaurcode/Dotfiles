@@ -110,7 +110,7 @@ alias ls='lsd'
 alias cat='bat'
 alias upgrade-system="sudo guix system -L /villa/kivilaak/Dotfiles reconfigure /villa/kivilaak/Dotfiles/xiug/config/systems/$(hostname).scm"
 alias update-system="guix pull --channels=/villa/kivilaak/Dotfiles/xiug/config/channels/channels.scm"
-alias upgrade-home="guix home reconfigure /villa/kivilaak/Dotfiles/xiug/config/home/home-config.scm"
+alias upgrade-home="guix home -L /villa/kivilaak/Dotfiles reconfigure /villa/kivilaak/Dotfiles/xiug/config/home/home-config.scm"
 
 
 # Idris2 and packer
