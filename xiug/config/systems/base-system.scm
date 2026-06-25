@@ -17,6 +17,7 @@
   vim
   wm
   shells
+  nushell
   tmux
   linux
   freedesktop
@@ -33,10 +34,18 @@
 (use-service-modules
   admin
   desktop
+  ;;  firmware
+  linux
   networking
   sddm
   dbus
-  pm)
+  opensnitch
+  pm
+  security-token
+  docker)
+
+(define %efi-device
+  (uuid "DC85-02B8" 'fat))
 
 (define %vault
   (mapped-device 
@@ -70,9 +79,12 @@
                         (service elogind-service-type)
                         (service network-manager-service-type
                                  (network-manager-configuration
-                                   (vpn-plugins (list network-manager-openconnect))))
+                                   (vpn-plugins (list network-manager-openconnect
+                                                      network-manager-openvpn))))
                         (service wpa-supplicant-service-type)
                         (service nftables-service-type)
+                        (service openntpd-service-type
+                                 (openntpd-configuration))
                         (service dbus-root-service-type)
                         (service sddm-service-type
                                  (sddm-configuration
@@ -81,6 +93,11 @@
                         (service upower-service-type)
                         (service power-profiles-daemon-service-type)
                         (service udisks-service-type)
+                        (service earlyoom-service-type
+                                 (earlyoom-configuration
+                                  (minimum-available-memory 5)
+                                  (minimum-free-swap 5)))
+;;                        (service fwupd-service-type)
                         (service gvfs-service-type)
                         (service polkit-service-type
                                  (polkit-configuration (polkit polkit)))
@@ -92,7 +109,11 @@
                                  (package-database-configuration))
                         (service kanata-service-type
                                  (kanata-configuration 
-                                   (config-file (local-file "../../../kanata/kanata.kbd")))))
+                                  (config-file (local-file "../../../kanata/kanata.kbd"))))
+                        (service pcscd-service-type)
+                        (service opensnitch-service-type)
+                        (service containerd-service-type)
+                        (service docker-service-type))
                       (modify-services %base-services
                                        (guix-service-type config => (guix-configuration
                                                                       (inherit config)
@@ -121,7 +142,17 @@
   
     (kernel linux)
     (initrd microcode-initrd)
-    (firmware (list linux-firmware))
+    (firmware (list linux-firmware
+                    wireless-regdb
+                    sof-firmware))
+    (kernel-arguments (append
+                       (list "snd_intel_dspcfg.dsp_driver=3"
+                             "zswap.enabled=1"
+                             "zswap.shrinker_enabled=1"
+                             "zswap.compressor=zstd"
+                             "zswap.max_pool_percent=40"
+                             "zswap.accept_threshold_percent=95")
+                       %default-kernel-arguments))
     (host-name "artemis")
     (timezone "Europe/Tallinn")
     (locale "en_US.utf8")
@@ -131,14 +162,20 @@
     (bootloader (bootloader-configuration
                   (bootloader grub-efi-lvm-no-crypto-bootloader)
                   (targets '("/efi"))
-                  (keyboard-layout keyboard-layout)))
+                  (keyboard-layout keyboard-layout)
+                  (menu-entries
+                   (list
+                    (menu-entry
+                     (label "Dark side")
+                     (device %efi-device)
+                     (chain-loader "/EFI/Microsoft/Boot/bootmgfw.efi"))))))
   
     (mapped-devices
       (list %vault %corevg %aethervg))
   
     (file-systems (append
-                    (list (file-system
-                            (device (uuid "DC85-02B8" 'fat))
+                   (list (file-system
+                            (device %efi-device)
                             (mount-point "/efi")
                             (type "vfat")
                             (needed-for-boot? #t))
@@ -205,7 +242,7 @@
                    (supplementary-groups '("wheel" "netdev"
                                            "audio" "video"
                                            "jetbrains"))
-                   (shell (file-append zsh "/bin/zsh")))
+                   (shell (file-append nushell "/bin/nu")))
                  %base-user-accounts))
   
     (groups (cons* (user-group
@@ -225,7 +262,6 @@
                         wpa-supplicant
                         network-manager
                         openconnect
-                        network-manager-openconnect
 
                         openssh
 
@@ -255,10 +291,11 @@
                         polkit
 
                         zsh
+                        fish
+                        nushell
                         tmux
 
-                        flatpak
-                        )
+                        flatpak)
                       %base-packages))
   
     (name-service-switch %mdns-host-lookup-nss))

@@ -25,7 +25,7 @@ require("nvim-treesitter.configs").setup {
 
         "c",
         "rust",
-        "idris",
+        -- "idris",
 
         -- Stylesheets stuff
 

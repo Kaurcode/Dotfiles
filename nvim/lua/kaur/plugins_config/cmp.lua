@@ -106,10 +106,10 @@ cmp.setup.cmdline(':', {
 -- Set up LSP (new API: vim.lsp.config + vim.lsp.enable)
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local idris2opts = {
-    server = { capabilities = capabilities }, -- Options passed to lspconfig idris2 configuration
-}
-require('idris2').setup(idris2opts)
+-- local idris2opts = {
+--     server = { capabilities = capabilities }, -- Options passed to lspconfig idris2 configuration
+-- }
+-- require('idris2').setup(idris2opts)
 
 vim.lsp.config('rust_analyzer', {
     capabilities = capabilities,
